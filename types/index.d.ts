@@ -12,7 +12,7 @@ interface Location {
 interface info {
 
 count: number,
-pages: 42,
+pages: number,
 next: number,
 prev: any
 
