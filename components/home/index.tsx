@@ -67,7 +67,7 @@ export default function eHome() {
 
       {/* Karakter listesi veya placeholder */}
       <div className="grid  container mx-auto">
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-2 gap-4 pb-10">
           {(isLoading ? placeholderCharacters : filteredCharacters)?.map(
             (character) => (
               <CharacterCard key={character.id} character={character} />
