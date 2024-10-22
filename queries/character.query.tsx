@@ -1,5 +1,6 @@
 import { getCharacters } from "@/apis";
-import { ApiError, CharacterResponse } from "@/apis/base.api";
+import { ApiError } from "@/apis/base.api";
+import { CharacterResponse } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 
 

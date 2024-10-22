@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useCharacters } from "@/queries";
 import CharacterCard from "../card/character-card";
+import HeaderTitle from "../header/header-title";
 
 export default function eHome() {
   const [status, setStatus] = useState<string | undefined>(undefined); // Status filtresi
@@ -37,15 +38,13 @@ export default function eHome() {
   }));
 
   return (
-    <div>
-      <div className="flex justify-center my-10">
-        <h1 className="text-6xl ">The Rick and Morty API</h1>
-      </div>
+    <div >
+     <HeaderTitle/>
       <div className="mb-10">
         <div className="flex justify-center mb-4">
           <div className="mr-4">
-            <h3>Status</h3>
-            <select value={status} onChange={handleStatusChange}>
+            <h3 className="text-center font-bold mb-1">Status</h3>
+            <select value={status} onChange={handleStatusChange} className="p-2 rounded-full">
               <option value="">All</option>
               <option value="alive">Alive</option>
               <option value="dead">Dead</option>
@@ -54,8 +53,8 @@ export default function eHome() {
           </div>
 
           <div className="mr-4">
-            <h3>Gender</h3>
-            <select value={gender} onChange={handleGenderChange}>
+            <h3 className="text-center font-bold mb-1">Gender</h3>
+            <select value={gender} onChange={handleGenderChange} className="p-2 rounded-full">
               <option value="">All</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
