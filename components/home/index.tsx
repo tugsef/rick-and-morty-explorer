@@ -95,24 +95,27 @@ export default function Home() {
             )
           )}
         </div>
-        <div className="w-full flex justify-between container mx-3 sm:mx-auto pb-10">
+        <div className="w-full flex justify-center gap-6 container mx-3 sm:mx-auto pb-10">
           <button
             onClick={handlePageDecrease}
             className={clsx(
-              "bg-black text-white px-4 py-1 rounded-l-xl rounded-e-sm shadow-lg hover:bg-slate-600",
-              pages === 1 && "opacity-0",
+              "bg-black text-white  w-24  py-1 rounded-l-xl rounded-e-sm shadow-lg hover:bg-slate-600",
+              pages === 1 && "opacity-50",
               data?.results.length === 0 && "opacity-0"
             )}
+            disabled={pages === 1}
           >
             Prev
           </button>{" "}
           <button
             onClick={handlePageIncrease}
             className={clsx(
-              "bg-black  text-white px-5 py-1 rounded-e-xl rounded-s-sm shadow-lg hover:bg-slate-600",
-              data?.info.pages === pages && "opacity-0",
+              "bg-black w-24  text-white  py-1 rounded-e-xl rounded-s-sm shadow-lg hover:bg-slate-600",
+              data?.info.pages === pages && "opacity-50",
               data?.results.length === 0 && "opacity-0"
+              
             )}
+            disabled={data?.info.pages === pages}
           >
             Next
           </button>
