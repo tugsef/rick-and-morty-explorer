@@ -4,7 +4,7 @@ import React from "react";
 
 function CharacterCard({ character }: { character: Character }) {
   return (
-    <div className="flex flex-col mx-3 items-center justify-start bg-white border border-gray-200 rounded-lg shadow sm:mx-0 sm:flex-row md:max-w-2xl  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+    <div className="flex flex-col mx-3 items-center justify-start bg-white border border-gray-200 rounded-lg shadow sm:mx-0 sm:flex-row md:max-w-2xl  hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 relative">
       <img
         className="object-cover w-full rounded-t-lg h-96 md:h-full md:w-48 md:rounded-none md:rounded-s-lg"
         src={character.image}
@@ -42,8 +42,14 @@ function CharacterCard({ character }: { character: Character }) {
 
       
       </div>
+      <span className={clsx("absolute right-0 top-0 py-1 px-2 text-xs font-extralight text-white rounded-lg m-1 shadow",
+      character.gender==="Male"&&"bg-blue-500",
+      character.gender==="Female"&&"bg-pink-500",
+      character.gender==="unknown"&&"bg-slate-500",
+      character.gender==="Genderless"&&"bg-black"
+      )}  >{character.gender}</span>
     </div>
-  );
+  )
 }
 
 export default CharacterCard;
