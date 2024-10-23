@@ -34,7 +34,7 @@ function CharacterCard({ character }: { character: Character }) {
 
           <div className="mt-1  flex flex-col">
             <span className="text-gray-900 font-bold">First seen in:</span>
-            <span className="inline-block">{character.origin.name}</span>
+            <span className="inline-block">{character.origin?.name}</span>
 
           </div>
          

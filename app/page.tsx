@@ -10,7 +10,6 @@ function Page() {
         className="fixed inset-0 -z-10 w-full h-full object-cover opacity-50"
         src={logo}
         alt="Ricky and Martin"
-  
       />
     </div>
   );

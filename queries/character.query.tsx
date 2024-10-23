@@ -13,4 +13,5 @@ export const useCharacters = (status?: string, gender?: string, page?: number) =
     },
     staleTime: 30000, // 30 saniye boyunca veriler taze kalır
     refetchInterval: 15000, // 15 saniyede bir yeniden sorgulama yapar
+
   });

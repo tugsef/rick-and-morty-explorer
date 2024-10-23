@@ -1,18 +1,18 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useCharacters } from "@/queries";
-import CharacterCard from "../card/character-card";
 import HeaderTitle from "../header/header-title";
 import { clsx } from "clsx";
+import CharacterCard from "../card/character-card";
+import CharacterSkeletonCard from "../card/character-skeleton-card";
 
 export default function Home() {
   const [status, setStatus] = useState<string | undefined>(undefined); // Status filtresi
   const [pages, setPages] = useState<number>(1); // Sayfa numarası
   const [gender, setGender] = useState<string | undefined>(undefined); // Gender filtresi
-  const [filteredCharacters, setFilteredCharacters] = useState<any[]>([]); // Filtrelenmiş karakterler
 
   // URL parametrelerine göre sorgu yap
-  const { data, error, isLoading } = useCharacters(status, gender, pages);
+  const { data, isLoading } = useCharacters(status, gender, pages);
 
   // Filtreleri güncelleme
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -33,23 +33,9 @@ export default function Home() {
     setPages((prevPage) => Math.max(prevPage - 1, 1)); // Sayfanın 1'den küçük olmamasını sağla
   };
 
-  // Status, gender veya sayfa numarası değiştiğinde sorguyu yeniden yap ve karakterleri filtrele
-  useEffect(() => {
-    if (data) {
-      setFilteredCharacters(data.results);
-    }
-  }, [data, status, gender, pages]);
-
-  // Yükleme sırasında gösterilecek yer tutucu veriler
-  const placeholderCharacters = Array.from({ length: 20 }, (_, index) => ({
-    id: index,
-    name: "Loading...",
-    status: "Loading...",
-    species: "Loading...",
-    image:
-      "https://fastly.picsum.photos/id/958/200/300.jpg?hmac=oCwv3AFzS5VqZv3nvDJ3H5RzcDH2OiL2g-GGwWL5fsI",
-  }));
-
+  const placeholderCharacters = Array.from({ length: 20 }, (_, index) => (
+    <CharacterSkeletonCard key={index} />
+  ));
   return (
     <div>
       <HeaderTitle />
@@ -60,7 +46,7 @@ export default function Home() {
             <select
               value={status}
               onChange={handleStatusChange}
-              className="p-2 rounded-full"
+              className="p-2 rounded-full w-32 text-center"
             >
               <option value="">All</option>
               <option value="alive">Alive</option>
@@ -69,12 +55,12 @@ export default function Home() {
             </select>
           </div>
 
-          <div className="mr-4">
+          <div>
             <h3 className="text-center font-bold mb-1">Gender</h3>
             <select
               value={gender}
               onChange={handleGenderChange}
-              className="p-2 rounded-full"
+              className="p-2 rounded-full w-32 text-center"
             >
               <option value="">All</option>
               <option value="male">Male</option>
@@ -87,33 +73,34 @@ export default function Home() {
       </div>
 
       {/* Karakter listesi veya placeholder */}
-      <div className="grid  container mx-auto  ">
+      <div className="grid container mx-auto">
         <div className="grid md:grid-cols-2 gap-4 pb-10">
-          {(isLoading ? placeholderCharacters : filteredCharacters)?.map(
-            (character) => (
-              <CharacterCard key={character.id} character={character} />
-            )
-          )}
+          {isLoading || (data?.results && data.results.length === 0)
+            ? // Show placeholder characters if loading or no results
+              placeholderCharacters
+            : // Only map if data and data.results are defined and have items
+              data?.results.map((character) => (
+                <CharacterCard key={character.id} character={character} />
+              ))}
         </div>
-        <div className="w-full flex justify-center gap-6 container mx-3 sm:mx-auto pb-10">
+        <div className="w-full flex justify-center gap-6 container sm:mx-auto pb-10">
           <button
             onClick={handlePageDecrease}
             className={clsx(
-              "bg-black text-white  w-24  py-1 rounded-l-xl rounded-e-sm shadow-lg hover:bg-slate-600",
+              "bg-black text-white w-24 py-1 rounded-l-xl rounded-e-sm shadow-lg hover:bg-slate-600",
               pages === 1 && "opacity-50",
               data?.results.length === 0 && "opacity-0"
             )}
             disabled={pages === 1}
           >
             Prev
-          </button>{" "}
+          </button>
           <button
             onClick={handlePageIncrease}
             className={clsx(
-              "bg-black w-24  text-white  py-1 rounded-e-xl rounded-s-sm shadow-lg hover:bg-slate-600",
+              "bg-black w-24 text-white py-1 rounded-e-xl rounded-s-sm shadow-lg hover:bg-slate-600",
               data?.info.pages === pages && "opacity-50",
               data?.results.length === 0 && "opacity-0"
-              
             )}
             disabled={data?.info.pages === pages}
           >
